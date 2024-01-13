@@ -18,7 +18,6 @@ export class MainComponent {
   displayedColumns: string[] = ['name', 'wordCount', 'lastEditDate', 'actions'];
 
   constructor() {
-
     this.categories = [
       {
         name: 'Animals',

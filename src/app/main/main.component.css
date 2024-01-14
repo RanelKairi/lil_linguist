@@ -5,7 +5,6 @@
   padding: 20px;
   margin: 20px;
   border: 1px solid black;
-  /* height: 60%; */
 }
 
 .header {
@@ -14,16 +13,16 @@
 }
 
 .table {
-  width: 80%; /* Adjust as needed */
+  width: 80%;
   margin: 20px;
 }
 
 .cell {
-  padding: 20px; /* Adjust the padding as needed */
+  padding: 20px;
 }
 .header-cell {
-  font-size: large; /* Adjust the font size as needed */
-  padding: 30px; /* Adjust the padding as needed */
+  font-size: large;
+  padding: 30px;
 }
 
 .new-category-button {

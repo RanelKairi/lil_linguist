@@ -1,77 +1,58 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Category } from '../../models/category.model';
-import { Language } from '../../models/enums/language.enum';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { CategoryService } from '../services/category.service';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { Category } from '../../models/category.model';
+
 
 @Component({
   selector: 'app-main',
+  templateUrl: './main.component.html',
+  styleUrls: ['./main.component.css'],
   standalone: true,
   imports: [MatTableModule, MatIconModule, MatButtonModule, CommonModule],
-  templateUrl: './main.component.html',
-  styleUrl: './main.component.css',
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
   categories: Category[] = [];
   displayedColumns: string[] = ['name', 'wordCount', 'lastEditDate', 'actions'];
 
-  constructor() {
-    this.categories = [
-      {
-        name: 'Animals',
-        id: 1,
-        updated_at: new Date(),
-        originLang: Language['English'],
-        destLang: Language['Hebrew'],
-        words: new Map([
-          ['Dog', 'כלב'],
-          ['Cat', 'חתול'],
-          ['Pegion','יונה'],
-        ]),
-      },
-      {
-        name: 'Veggies',
-        id: 2,
-        updated_at: new Date(),
-        originLang: Language['Hebrew'],
-        destLang: Language['English'],
-        words: new Map([
-          ['Cucumber', 'מלפפון'],
-          ['Tomato', 'עגבנייה'],
-          ['Onion', 'בצל'],
-          ['Lattece', 'חסה'],
-          ['Garlic', 'שום'],
-        ]),
-      },
-      {
-        name: 'Fruits',
-        id: 3,
-        updated_at: new Date(),
-        originLang: Language['English'],
-        destLang: Language['Hebrew'],
-        words: new Map([
-          ['Apple', 'תפוח'],
-          ['Watermelon', 'אבטיח'],
-          ['Peach', 'אפרסק'],
-        ]),
-      },
-    ];
+  constructor(
+    private categoryService: CategoryService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
+
+  ngOnInit() {
+    this.fetchCategories();
+  }
+
+  fetchCategories() {
+    this.categories = this.categoryService.list();
   }
 
   createNewCategory() {
-    
-    console.log('Create New Category clicked');
+    this.router.navigate(['/newcategory']);
   }
 
-  editCategory(category: Category) {
-    
-    console.log('Edit Category clicked:', category);
+  editCategory(categoryId: number) {
+    this.router.navigate(['/editcategory', categoryId]);
   }
 
-  deleteCategory(category: Category) {
-    
-    console.log('Delete Category clicked:', category);
+  deleteCategory(categoryId: number) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { message: 'Are you sure you want to delete this category?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.categoryService.delete(categoryId);
+        this.fetchCategories();
+      }
+    });
   }
 }

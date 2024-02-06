@@ -1,26 +1,24 @@
-import { Language } from './enums/language.enum';
+import { TranslatedWord } from "./tanslated-word.model";
+import { Language } from "./enums/language.enum";
 
 export class Category {
-  name: string;
   id: number;
-  updated_at: Date;
-  originLang: Language;
-  destLang: Language;
-  words: Map<string, string>;
+  name: string;
+  origin: Language; 
+  target: Language;
+  lastUpdateDate: Date = new Date();
+  words: TranslatedWord[] = [];
+ public wordCount: number =0;
 
   constructor(
-    name: string,
     id: number,
-    updated_at: Date,
-    originLang: Language,
-    destLang: Language,
-    words: Map<string, string>
+    name: string,
+    origin: Language,
+    target: Language
   ) {
-    this.name = name;
     this.id = id;
-    this.updated_at = updated_at;
-    this.originLang = originLang;
-    this.destLang = destLang;
-    this.words = words;
+    this.name = name;
+    this.origin = origin;
+    this.target = target;
   }
 }

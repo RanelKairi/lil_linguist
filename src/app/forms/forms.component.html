@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="forms">
     <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()">
       <mat-form-field appearance="fill">
@@ -32,3 +33,46 @@
     </form>
   </div>
   
+=======
+<div class="category-form-container">
+  <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()">
+    <mat-form-field appearance="fill">
+      <mat-label>Category Name</mat-label>
+      <input matInput formControlName="name">
+      <mat-error *ngIf="categoryForm.get('name')?.errors?.['required']">Category name is required</mat-error>
+    </mat-form-field>
+
+    <div formArrayName="words">
+      <div *ngFor="let wordGroup of words.controls; let i = index" [formGroupName]="i">
+        <mat-form-field appearance="fill">
+          <mat-label>Source Word</mat-label>
+          <input matInput formControlName="origin">
+          <mat-error *ngIf="wordGroup.get('origin')?.errors?.['required']">Source word is required</mat-error>
+          <mat-error *ngIf="wordGroup.get('origin')?.errors?.['pattern']">Only English letters allowed</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Target Word</mat-label>
+          <input matInput formControlName="target">
+          <mat-error *ngIf="wordGroup.get('target')?.errors?.['required']">Target word is required</mat-error>
+          <mat-error *ngIf="wordGroup.get('target')?.errors?.['pattern']">Only Hebrew letters allowed</mat-error>
+        </mat-form-field>
+
+        <button mat-icon-button aria-label="Remove word pair" (click)="removeWordPair(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <button mat-button (click)="addWordPair()" type="button">Add Word</button>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit">Save Category</button>
+  </form>
+</div>
+<div *ngIf="!categoryForm.valid && categoryId">
+  Failed to load category information for ID: {{ categoryId }}
+</div>
+<div *ngIf="categoryForm.valid">
+  <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()">
+  </form>
+</div>
+>>>>>>> a5fd187414aaad451b242c69c158c1b450fb62fb

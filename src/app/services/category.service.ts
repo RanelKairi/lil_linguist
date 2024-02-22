@@ -6,12 +6,18 @@ import { TranslatedWord } from '../../models/tanslated-word.model';
 @Injectable({
   providedIn: 'root'
 })
+<<<<<<< HEAD
 
+=======
+>>>>>>> a5fd187414aaad451b242c69c158c1b450fb62fb
 export class CategoryService {
   [x: string]: any;
   private categoriesIdToData = new Map<number, Category>();
   private nextId = 0;
+<<<<<<< HEAD
   private nextWordCount = 0;
+=======
+>>>>>>> a5fd187414aaad451b242c69c158c1b450fb62fb
   private categories: Category[] = [];
   
 
@@ -23,9 +29,14 @@ export class CategoryService {
 
   add(name: string): Category {
     const id = this.nextId++;
+<<<<<<< HEAD
     
     const newCategory = new Category(id, name, Language.English, Language.Hebrew);
     const wordCount = this.nextWordCount++;
+=======
+    const counts:number = this['wordCount']++;
+    const newCategory = new Category(id, name, Language.English, Language.Hebrew);
+>>>>>>> a5fd187414aaad451b242c69c158c1b450fb62fb
     this.categoriesIdToData.set(id, newCategory);
     return newCategory;
   }
@@ -45,10 +56,17 @@ export class CategoryService {
       existingCategory.lastUpdateDate = new Date();
     }
   }
+<<<<<<< HEAD
   addWordToCategory(categoryId: number, words: TranslatedWord): void {
     const category = this.categories.find(c => c.id === categoryId);
     if (category) {
       category.words.push(words);
+=======
+  addWordToCategory(categoryId: number, word: TranslatedWord): void {
+    const category = this.categories.find(c => c.id === categoryId);
+    if (category) {
+      category.words.push(word);
+>>>>>>> a5fd187414aaad451b242c69c158c1b450fb62fb
       category.wordCount++;
     }
   }

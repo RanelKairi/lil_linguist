@@ -1,6 +1,7 @@
 <div class="main-container">
 
   <h2 class="header">Categories</h2>
+  
 
 
   <mat-table [dataSource]="categories" class="mat-elevation-z8 table">
@@ -13,13 +14,13 @@
         {{ category.name }}
       </mat-cell>
     </ng-container>
-
+    
     <ng-container matColumnDef="wordCount">
       <mat-header-cell class="header-cell" *matHeaderCellDef>
         No. of Words
       </mat-header-cell>
       <mat-cell class="cell" *matCellDef="let category">
-        {{ category.words.size }}
+        {{ category.wordCount }}
       </mat-cell>
     </ng-container>
 
@@ -28,7 +29,7 @@
         Last Edit Date
       </mat-header-cell>
       <mat-cell class="cell" *matCellDef="let category">
-        {{ category.updated_at | date : "medium" }}
+        {{ category.updated | date : "medium" }}
       </mat-cell>
     </ng-container>
 
@@ -60,3 +61,4 @@
     New Category
   </button>
 </div>
+

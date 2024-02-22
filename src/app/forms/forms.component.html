@@ -1,0 +1,34 @@
+<div class="forms">
+    <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()">
+      <mat-form-field appearance="fill">
+        <mat-label>Category Name</mat-label>
+        <input matInput formControlName="name">
+        <mat-error *ngIf="categoryForm.get('name')?.errors?.['required']">Category name is required</mat-error>
+      </mat-form-field>
+  
+      <div formArrayName="words">
+        <div *ngFor="let wordGroup of words.controls; let i = index" [formGroupName]="i">
+          <mat-form-field appearance="fill">
+            <mat-label>Source Word (English Only)</mat-label>
+            <input matInput formControlName="origin">
+            <mat-error *ngIf="wordGroup.get('origin')?.errors?.['required']">Source word is required</mat-error>
+            <mat-error *ngIf="wordGroup.get('origin')?.errors?.['pattern']">Only English letters allowed</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Target Word (Hebrew Only)</mat-label>
+            <input matInput formControlName="target">
+            <mat-error *ngIf="wordGroup.get('target')?.errors?.['required']">Target word is required</mat-error>
+            <mat-error *ngIf="wordGroup.get('target')?.errors?.['pattern']">Only Hebrew letters allowed</mat-error>
+          </mat-form-field>
+  
+          <button mat-icon-button aria-label="Remove word pair" (click)="removeWordPair(i)">
+            <mat-icon>remove_circle</mat-icon>
+          </button>
+        </div>
+      </div>
+  
+      <button mat-button (click)="addWordPair()">Add Word Pair</button>
+      <button mat-button type="submit">Save Category</button>
+    </form>
+  </div>
+  
